@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Todoリスト</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>JS Todoリスト</h1>
+    </header>
+    <main>
+      <!-- Todoリストを状態ごとの表示に切り替えるラジオボタン -->
+      <form id="stateRadioForm" class="state-radio__wrap">
+        <div class="state-radio__item">
+          <input
+            type="radio"
+            name="radio"
+            id="all"
+            value="all"
+            checked="checked"
+          />
+          <label for="all">すべて</label>
+        </div>
+        <div class="state-radio__item">
+          <input type="radio" name="radio" id="progress" value="progress" />
+          <label for="progress">作業中</label>
+        </div>
+        <div class="state-radio__item">
+          <input type="radio" name="radio" id="done" value="done" />
+          <label for="done">完了</label>
+        </div>
+      </form>
+
+      <!-- Todoリストの表示エリア -->
+      <table class="todo-list__table">
+        <thead>
+          <tr>
+            <th class="todo-list__id">ID</th>
+            <th class="todo-list__task">タスク名</th>
+            <th class="todo-list__state">状態</th>
+            <th class="todo-list__limit">期限</th>
+            <th class="todo-list__delete">削除</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- NOTE: ここにJSでTodoリストが挿入される -->
+          <tr>
+            <td>1</td>
+            <td>サンプル</td>
+            <td>作業中</td>
+            <td>2020/12/31</td>
+            <td><button>✕</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Todoリストの入力エリア -->
+      <form id="inputTodoForm">
+        <input type="text" id="todo" name="todo" placeholder="タスク名を入力" />
+        <input type="date" id="limit" />
+        <button type="submit" id="add">追加</button>
+      </form>
+    </main>
+    <script src="js/index.js" defer></script>
+  </body>
+</html>

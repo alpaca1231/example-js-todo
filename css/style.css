@@ -1,0 +1,8 @@
+.state-radio__wrap {
+  display: flex;
+  column-gap: 8px;
+}
+
+.todo-list__task {
+  min-width: 200px;
+}
