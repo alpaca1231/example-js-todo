@@ -70,6 +70,46 @@ const createTdElement = (element) => {
 };
 
 /**
+ * タスクの状態切り替えを行う関数
+ * @param {string} id タスクID
+ */
+const toggleTaskState = (id) => {
+  // idが一致するTodoを検索する
+  const targetTodo = todoList.find((todo) => todo.id === id);
+
+  // Todoが見つからない場合は処理を中断する
+  if (!targetTodo) {
+    return;
+  }
+  // Todoの状態を切り替える
+  targetTodo.state =
+    targetTodo.state === TODO_STATE.PROGRESS
+      ? TODO_STATE.DONE
+      : TODO_STATE.PROGRESS;
+};
+
+/**
+ * タスクの状態切り替えボタンを生成する関数
+ * @param {string} state タスクの状態
+ * @param {string} id タスクのID
+ * @returns {HTMLButtonElement} タスクの状態切り替えボタン
+ */
+const createChangeStateButton = (state, id) => {
+  const tdElement = document.createElement('td');
+  const buttonElement = document.createElement('button');
+  buttonElement.textContent = state;
+  buttonElement.id = id;
+  tdElement.appendChild(buttonElement);
+  buttonElement.addEventListener('click', () => {
+    // Todoの状態を切り替える
+    toggleTaskState(id);
+    // Todoリストを表示する
+    displayTodoList();
+  });
+  return tdElement;
+};
+
+/**
  * Todoリストを表示する関数
  */
 const displayTodoList = () => {
@@ -86,11 +126,18 @@ const displayTodoList = () => {
     const trElement = document.createElement('tr');
     // todoを配列に展開して、forEachでループ処理する
     Object.entries(todo).forEach(([key, value]) => {
-      // IDの場合は例外として配列の何番目かを表示する
+      // IDは配列の何番目かを表示する
       if (key === 'id') {
         trElement.appendChild(createTdElement(index + 1));
         return;
       }
+      if (key === 'state') {
+        // stateは状態切り替えボタンを表示する
+        const buttonElement = createChangeStateButton(value, todo.id);
+        trElement.appendChild(buttonElement);
+        return;
+      }
+      // その他の場合はそのまま表示する
       trElement.appendChild(createTdElement(value));
     });
     todoListElement.appendChild(trElement);
