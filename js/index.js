@@ -163,9 +163,6 @@ const createDeleteButton = (id) => {
  * Todoリストを表示する関数
  */
 const displayTodoList = () => {
-  // FIXME: デバッグ用
-  console.log('todoList', todoList);
-
   const todoListElement = document.getElementById('todoList');
 
   // 最初に表示されているTodoリストをresetする
