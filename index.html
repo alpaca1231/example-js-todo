@@ -13,24 +13,28 @@
     <main>
       <!-- Todoリストを状態ごとの表示に切り替えるラジオボタン -->
       <form id="stateRadioForm" class="state-radio__wrap">
-        <div class="state-radio__item">
+        <label for="all">
           <input
             type="radio"
             name="radio"
             id="all"
-            value="all"
+            value="すべて"
             checked="checked"
-          />
-          <label for="all">すべて</label>
-        </div>
-        <div class="state-radio__item">
-          <input type="radio" name="radio" id="progress" value="progress" />
-          <label for="progress">作業中</label>
-        </div>
-        <div class="state-radio__item">
-          <input type="radio" name="radio" id="done" value="done" />
-          <label for="done">完了</label>
-        </div>
+          />すべて</label
+        >
+
+        <label for="progress"
+          ><input
+            type="radio"
+            name="radio"
+            id="progress"
+            value="作業中"
+          />作業中</label
+        >
+
+        <label for="done"
+          ><input type="radio" name="radio" id="done" value="完了" />完了</label
+        >
       </form>
 
       <!-- Todoリストの表示エリア -->

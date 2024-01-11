@@ -56,6 +56,20 @@ const resetTodoList = () => {
 };
 
 /**
+ * Todoリストを状態ごとにフィルタリングするラジオボタンの値を取得する関数
+ * @returns {string | null} ラジオボタンの状態('すべて' or '作業中' or '完了')
+ */
+const getSelectedState = () => {
+  const radioButtons = document.getElementsByName('radio');
+  for (const radioButton of radioButtons) {
+    if (radioButton.checked) {
+      return radioButton.value;
+    }
+  }
+  return null; // 選択されているラジオボタンがない場合
+};
+
+/**
  * todoの各プロパティをtd要素に格納する関数
  * @param {HTMLElement | string} element td要素に格納する要素
  * @returns {HTMLTableCellElement} td要素
@@ -157,8 +171,17 @@ const displayTodoList = () => {
   // 最初に表示されているTodoリストをresetする
   resetTodoList();
 
+  // ラジオボタンの状態を取得する
+  const selectedState = getSelectedState();
+
+  // ラジオボタンの状態に応じてTodoリストをフィルタリングする
+  const filteredTodoList =
+    selectedState === TODO_STATE.PROGRESS || selectedState === TODO_STATE.DONE
+      ? todoList.filter((todo) => todo.state === selectedState)
+      : todoList;
+
   // Todoリストを表示する
-  todoList.forEach((todo, index) => {
+  filteredTodoList.forEach((todo, index) => {
     const trElement = document.createElement('tr');
     // todoを配列に展開して、forEachでループ処理する
     Object.entries(todo).forEach(([key, value]) => {
@@ -218,4 +241,12 @@ const inputTodoForm = document.getElementById('inputTodoForm');
 inputTodoForm.addEventListener('submit', (event) => {
   event.preventDefault(); // デフォルトのイベントをキャンセルする
   addTodo();
+});
+
+// Todoリストを状態ごとにフィルタリングするラジオボタンが変更された時のイベント
+const radioButtons = document.getElementsByName('radio');
+radioButtons.forEach((radioButton) => {
+  radioButton.addEventListener('change', () => {
+    displayTodoList();
+  });
 });
