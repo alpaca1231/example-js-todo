@@ -110,6 +110,42 @@ const createChangeStateButton = (state, id) => {
 };
 
 /**
+ * タスクの削除を行う関数
+ * @param {string} id タスクID
+ */
+const deleteTask = (id) => {
+  // idが一致するTodoを検索する
+  const targetTodo = todoList.find((todo) => todo.id === id);
+
+  // Todoが見つからない場合は処理を中断する
+  if (!targetTodo) {
+    return;
+  }
+
+  // Todoを削除する
+  todoList.splice(todoList.indexOf(targetTodo), 1);
+};
+
+/**
+ * タスクの削除ボタンを生成する関数
+ * @param {string} id タスクID
+ * @returns {HTMLButtonElement} タスクの削除ボタン
+ */
+const createDeleteButton = (id) => {
+  const tdElement = document.createElement('td');
+  const buttonElement = document.createElement('button');
+  buttonElement.textContent = '✕';
+  tdElement.appendChild(buttonElement);
+  buttonElement.addEventListener('click', () => {
+    // Todoを削除する
+    deleteTask(id);
+    // Todoリストを表示する
+    displayTodoList();
+  });
+  return tdElement;
+};
+
+/**
  * Todoリストを表示する関数
  */
 const displayTodoList = () => {
@@ -133,13 +169,14 @@ const displayTodoList = () => {
       }
       if (key === 'state') {
         // stateは状態切り替えボタンを表示する
-        const buttonElement = createChangeStateButton(value, todo.id);
-        trElement.appendChild(buttonElement);
+        trElement.appendChild(createChangeStateButton(value, todo.id));
         return;
       }
       // その他の場合はそのまま表示する
       trElement.appendChild(createTdElement(value));
     });
+    // 削除ボタンを表示する
+    trElement.appendChild(createDeleteButton(todo.id));
     todoListElement.appendChild(trElement);
   });
 };
