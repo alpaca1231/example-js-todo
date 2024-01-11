@@ -233,10 +233,21 @@ const addTodo = () => {
   document.getElementById('limit').value = '';
 };
 
-// Todoリストにタスクを追加するイベント
+// 入力フォームのsubmitイベントをキャンセルする
 const inputTodoForm = document.getElementById('inputTodoForm');
 inputTodoForm.addEventListener('submit', (event) => {
   event.preventDefault(); // デフォルトのイベントをキャンセルする
+});
+// ⌘ + Enter または ctrl + Enter  でタスクを追加するイベント
+inputTodoForm.addEventListener('keydown', (event) => {
+  if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+    addTodo();
+  }
+});
+
+// タスクを追加するボタン
+const addButton = document.getElementById('addTaskButton');
+addButton.addEventListener('click', () => {
   addTodo();
 });
 
